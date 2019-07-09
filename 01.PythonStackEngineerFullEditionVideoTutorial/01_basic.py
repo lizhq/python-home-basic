@@ -19,6 +19,8 @@ age = int(input("输入int："))
 print("age：",age)
 '''
 
+print('name:%-10s  age:%-10d  height:%-5.2f' % ('Jack',26,1.890))
+
 # step 003 集合
 # 元组(不可变列表)
 name_list = ['alex', 'seven', 'eric']
