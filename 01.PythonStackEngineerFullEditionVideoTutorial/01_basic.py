@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 #_*_coding:utf-8_*_
 
+#__author:"Jack Li"
+#date: %Y-%m-%d
+
+
 # 001 变量，输出
 '''name = "Jack"
 print("hello word!","您好：",name,sep="")
