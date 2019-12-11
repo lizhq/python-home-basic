@@ -16,8 +16,16 @@ for i in result:
 #print(next(result))
 
 def fun():
-    print("xxxx")
-    yield "ok"
+    print("1")
+    yield "1"
+    print("2")
+    yield "2"
+    print("3")
+    yield "3"
 
 print(fun) #<function fun at 0x1007a8e60>
 print(fun()) #<generator object fun at 0x108c65550>
+
+for i in fun():
+    print(i)
+
