@@ -17,7 +17,7 @@ def random_code():
     for i in range(5):
         c = random.choice([random.randrange(10),chr(random.randrange(65,91))])
         code += str(c)
-        
+        print(i)
     return code
 
 print(random_code()) 
