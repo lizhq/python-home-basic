@@ -37,3 +37,14 @@ python 全栈工程师完整版视频教程
 
 ## 网络编程
     https://www.cnblogs.com/yuanchenqi/articales/5692716.html
+
+## 线程与进程
+    https://www.cnblogs.com/yuanchenqi/articales/5733873.html
+
+    https://www.cnblogs.com/yuanchenqi/articales/5745958.html
+
+## python 编码
+    https://www.cnblogs.com/yuanchenqi/articales/5938733.html
+
+## 协程-异步IO\数据库\队列\缓存
+    https://www.cnblogs.com/alex3714/articales/5248247.html
