@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>二级联动</h1>
+    <select id="province">
+        <option value="-1">请选择省份</option>
+        {% for p in pro_list %}
+            <option value="{{ p.id }}">{{ p.name }}</option>
+        {% endfor %}
+    </select>
+
+    <select id="city">
+        <option value="-1">请选择市</option>
+    </select>
+
+    <select id="xian">
+        <option value="-1">请选择县</option>
+    </select>
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            bindProvinceEvent();
+            bindCityEvent()
+        });
+        
+        function bindCityEvent() {
+            $('#city').change(function () {
+                var v = $(this).val();
+                if (v == "-1"){
+
+                }else{
+                    $('#xian option:gt(0)').remove();
+                    $.ajax({
+                        url: '/fetch_xian.html',
+                        type: 'GET',
+                        data: {'city_id': v},
+                        dataType: 'json',
+                        success:function (arg) {
+                            $.each(arg, function(k,v){
+                                var tag = document.createElement('option');
+                                tag.innerHTML = v.name;
+                                tag.setAttribute('value', v.id);
+                                $('#xian').append(tag);
+                            });
+                        }
+                    })
+                }
+            })
+        }
+        
+        function bindProvinceEvent(){
+            $('#province').change(function () {
+                var v = $(this).val();
+                if(v == '-1'){
+
+                }else{
+                    $('#city option:gt(0)').remove();
+                    $('#xian option:gt(0)').remove();
+                    $.ajax({
+                        url: '/fetch_city.html',
+                        type: 'GET',
+                        data: {'province_id': v},
+                        dataType: 'json',
+                        success: function (arg) {
+                            $.each(arg, function(k,v){
+                                var tag = document.createElement('option');
+                                tag.innerHTML = v.name;
+                                tag.setAttribute('value', v.id);
+                                $('#city').append(tag);
+                            });
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

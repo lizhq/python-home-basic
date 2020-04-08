@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>编辑学生</h1>
+    <form action="/edit_student.html" method="POST">
+        <input class="hide" type="text" name="id" value="{{ obj.id }}" />
+        <p>
+            <input placeholder="学生姓名" type="text" name="name" value="{{ obj.name }}"  />
+        </p>
+        <p>
+            <input placeholder="学生邮箱" type="text" name="email" value="{{ obj.email }}" />
+        </p>
+        <p>
+            <!-- <input placeholder="班级ID" type="text" name="cls_id" /> -->
+            <select name="cls_id">
+                {% for op in cls_list %}
+                    {% if op.id == obj.cls_id %}
+                        <option selected="selected" value="{{ op.id }}">{{ op.caption }}</option>
+                    {% else %}
+                        <option value="{{ op.id }}">{{ op.caption }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </p>
+        <input type="submit" value="提交"/>
+    </form>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#menu_student').addClass('active');
+        });
+    </script>
+{% endblock %}

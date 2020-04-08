@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>学生列表</h1>
+    <div>
+        <a href="/add_student.html">添加</a>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>学生ID</th>
+                <th>学生姓名</th>
+                <th>学生邮箱</th>
+                <th>所属班级ID</th>
+                <th>所属班级</th>
+                <th>徐昂向</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in result %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.cls.id }}</td>
+                    <td>{{ row.cls.caption }}</td>
+                    <td>
+                        <a href="/edit_student.html?nid={{ row.id }}">编辑</a> | <a>删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#menu_student').addClass('active');
+        })
+    </script>
+{% endblock %}

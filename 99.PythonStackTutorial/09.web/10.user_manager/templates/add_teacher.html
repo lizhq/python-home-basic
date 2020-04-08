@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>添加老师</h1>
+    <form action="/add_teacher.html" method="POST">
+        <p>
+            老师姓名：<input name="name" type="text" />
+        </p>
+        <p>
+            班级：
+            <select name="cls" multiple>
+                {% for row in cls_list %}
+                    <option value="{{ row.id }}">{{ row.caption }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <input type="submit" value="提交" />
+    </form>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#menu_teacher').addClass('active');
+        })
+    </script>
+{% endblock %}

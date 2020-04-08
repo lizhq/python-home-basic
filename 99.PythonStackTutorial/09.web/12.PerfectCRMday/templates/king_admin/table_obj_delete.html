@@ -1,0 +1,24 @@
+{% extends 'king_admin/table_index.html' %}
+{% load tags %}
+{% block container %}
+
+    {% display_obj_related objs  %}
+
+    <ul style="color: red">
+    {% for k,v in errors.items %}
+        <li>{{ k }}:{{ v }}</li>
+    {% endfor %}
+    </ul>
+    <form method="post">{% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Yes,I'm sure">
+        <input type="hidden" value="yes" name="delete_confirm">
+        <input type="hidden" value="{{ selected_ids }}" name="selected_ids">
+        <input type="hidden" value="{{ action }}" name="action">
+        <a class="btn btn-info" href="{% url 'table_objs' app_name table_name  %}">No,Take me back</a>
+    </form>
+
+
+{% endblock %}
+
+
+

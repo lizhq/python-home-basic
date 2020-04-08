@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block css %}
+    <style>
+        .tag{
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid red;
+            background-color: lightpink;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <h1>老师列表</h1>
+    <table border="1">
+        <thead></thead>
+        <tbody>
+            {% for obj in teacher_list %}
+                <tr>
+                    <td>{{ obj.id }}</td>
+                    <td>{{ obj.name }}</td>
+                    <td>
+                        {% for c in obj.cls.all %}
+                            <span class="tag" nid="{{ c.id }}">{{ c.caption }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#menu_teacher').addClass('active');
+        })
+    </script>
+{% endblock %}

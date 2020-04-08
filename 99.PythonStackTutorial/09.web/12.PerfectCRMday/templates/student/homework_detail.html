@@ -1,0 +1,91 @@
+{%  extends 'index.html' %}
+{% load stu_tags %}
+{% block page-content %}
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">班级:{{ studyrecord_obj.student.enrolled_class }}  | 节次{{ studyrecord_obj.course_record.day_num }}</div>
+  <div class="panel-body">
+        <h4>作业标题:{{ studyrecord_obj.course_record.homework_title }}</h4>
+        <h4>作业详情：<pre>{{ studyrecord_obj.course_record.homework_content }}</pre></h4>
+        <h4>老师评语:{{ studyrecord_obj.memo }}</h4>
+        <h4>本节成绩:{{ studyrecord_obj.score }}</h4>
+        <div class="row">
+            <p>已上传作业</p>
+            <ul>
+                {% for file in file_lists %}
+                <li>{{ file.0 }} | {{ file.1 }} | {{ file.2 }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <form id="filedropzone" method="post" action="{{ request.path }}" class="dropzone dz-clickable" >{% csrf_token %}
+            <div class="dz-default dz-message">
+                <div class="dz-icon icon-wrap icon-circle icon-wrap-md">
+                    <i class="fa fa-cloud-upload fa-3x"></i>
+                </div>
+                <div>
+                    <p class="dz-text">把证件信息拖放到这里</p>
+                    <p class="text-muted">最多可上传2张照片</p>
+                </div>
+            </div>
+
+        </form>
+
+  </div>
+  <!-- Table -->
+</div>
+{% endblock %}
+
+{% block bottom-js %}
+<script>
+    $(document).ready(function () {
+         Dropzone.options.filedropzone = {
+          url:"{{ request.path }}",
+          paramName: "file", // The name that will be used to transfer the file
+          maxFilesize: 1, // MB,
+          addRemoveLinks:true,
+          maxFiles:5,
+          uploadMultiple:true,
+          accept: function(file, done) {
+            if (! file.name.endsWith(".zip") ) {
+              alert("只能上传.zip格式的压缩包")
+                done("文件为上传")
+                myDropzone.removeFile(file);
+            }
+            else { done(); }
+          }
+        };
+
+
+      Dropzone.autoDiscover = false;
+      myDropzone = new Dropzone("#filedropzone");
+      myDropzone.on("addedfile", function(file) {
+        /* Maybe display some more file information on your page */
+        console.log("-------",file)
+      });
+
+      myDropzone.on("success", function(file,response) {
+          /* Maybe display some more file information on your page */
+          console.log('filex upload done...', response);
+      } )
+
+    })
+    function RegisterFormCheck() {
+        if (myDropzone.files.length <2){
+            alert("必须至少上传2张图片!")
+            return false;
+        }
+
+        if ($("form :checkbox").prop('checked') ){
+            $("form").find("[disabled]").removeAttr("disabled");
+
+            return true;
+        }else {
+            alert("必须同意条款");
+            return false;
+        }
+
+    }
+</script>
+{% endblock %}

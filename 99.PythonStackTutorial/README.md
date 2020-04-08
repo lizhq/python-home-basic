@@ -48,3 +48,31 @@ python 全栈工程师完整版视频教程
 
 ## 协程-异步IO\数据库\队列\缓存
     https://www.cnblogs.com/alex3714/articales/5248247.html
+
+## 网络基础之网络协议篇
+    https://www.cnblogs.com/linhaifeng/articales/5937962.html
+
+## 网络基础之子网划分
+    https://www.cnblogs.com/linhaifeng/articales/5951486.html
+
+## 事件驱动模型
+    https://www.cnblogs.com/yuanchenqi/articales/5722574.html
+
+    select
+
+## MYSQL
+    https://www.cnblogs.com/wupeiqi/articles/5713315.html
+
+    https://www.cnblogs.com/wupeiqi/articles/5713323.html
+
+    https://www.cnblogs.com/wupeiqi/articles/5729934.html
+
+    https://www.cnblogs.com/wupeiqi/articles/5716963.html
+
+    https://www.cnblogs.com/wupeiqi/articles/5713330.html
+## web 开发
+    https://www.cnblogs.com/yuanchenqi/articles/6083427.html
+
+    https://www.cnblogs.com/yuanchenqi/articles/5997456.html
+
+    https://www.cnblogs.com/wupeiqi/articles/6144178.html

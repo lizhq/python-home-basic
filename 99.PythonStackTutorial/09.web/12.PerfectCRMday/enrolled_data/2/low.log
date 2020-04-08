@@ -1,0 +1,39 @@
+c:\mysql-5.7.16-winx64\mysql-5.7.16-winx64\bin\mysqld, Version: 5.7.16-log (MySQL Community Server (GPL)). started with:
+TCP Port: 0, Named Pipe: (null)
+Time                 Id Command    Argument
+# Time: 2016-10-26T06:48:37.954971Z
+# User@Host: root[root] @ localhost [::1]  Id:     2
+# Query_time: 0.015001  Lock_time: 0.014001 Rows_sent: 21  Rows_examined: 21
+use sqlexample;
+SET timestamp=1477464517;
+select * from student;
+# Time: 2016-10-26T09:42:14.953789Z
+# User@Host: root[root] @ localhost [::1]  Id:     3
+# Query_time: 0.006000  Lock_time: 0.006000 Rows_sent: 15  Rows_examined: 15
+SET timestamp=1477474934;
+select * from class;
+# Time: 2016-10-26T09:42:32.334783Z
+# User@Host: root[root] @ localhost [::1]  Id:     3
+# Query_time: 0.000000  Lock_time: 0.000000 Rows_sent: 15  Rows_examined: 15
+SET timestamp=1477474952;
+select * from class;
+# Time: 2016-10-26T09:42:32.848813Z
+# User@Host: root[root] @ localhost [::1]  Id:     3
+# Query_time: 0.001000  Lock_time: 0.000000 Rows_sent: 15  Rows_examined: 15
+SET timestamp=1477474952;
+select * from class;
+# Time: 2016-10-26T09:42:33.366842Z
+# User@Host: root[root] @ localhost [::1]  Id:     3
+# Query_time: 0.001000  Lock_time: 0.001000 Rows_sent: 15  Rows_examined: 15
+SET timestamp=1477474953;
+select * from class;
+# Time: 2016-10-26T09:42:34.257893Z
+# User@Host: root[root] @ localhost [::1]  Id:     3
+# Query_time: 0.001000  Lock_time: 0.001000 Rows_sent: 15  Rows_examined: 15
+SET timestamp=1477474954;
+select * from class;
+# Time: 2016-10-26T09:42:37.761094Z
+# User@Host: root[root] @ localhost [::1]  Id:     3
+# Query_time: 0.000000  Lock_time: 0.000000 Rows_sent: 15  Rows_examined: 15
+SET timestamp=1477474957;
+select * from class;

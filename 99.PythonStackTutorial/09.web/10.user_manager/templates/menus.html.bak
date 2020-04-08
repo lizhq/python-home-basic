@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>二级联动</h1>
+    <select id="province">
+        <option value="-1">请选择省份</option>
+        {% for p in pro_list %}
+            <option value="{{ p.id }}">{{ p.name }}</option>
+        {% endfor %}
+    </select>
+
+    <select id="city">
+        <option value="-1">请选择市</option>
+    </select>
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            bindProvinceEvent();
+        });
+
+        function bindProvinceEvent(){
+            $('#province').change(function () {
+                var v = $(this).val();
+                if(v == '-1'){
+
+                }else{
+                    $('#city option:gt(0)').remove();
+                    $.ajax({
+                        url: '/fetch_city.html',
+                        type: 'GET',
+                        data: {'province_id': v},
+                        dataType: 'json',
+                        success: function (arg) {
+                            $.each(arg, function(k,v){
+                                var city_id =  v.pk;
+                                var city_name = v.fields.name;
+                                var tag = document.createElement('option');
+                                tag.innerHTML = city_name;
+                                tag.setAttribute('value', city_id);
+                                $('#city').append(tag);
+                            });
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+{% endblock %}

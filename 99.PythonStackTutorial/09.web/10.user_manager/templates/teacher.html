@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block css %}
+    <style>
+        .tag{
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid red;
+            background-color: lightpink;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <h1>老师列表</h1>
+    <div>
+        <a href="/add_teacher.html">添加</a>
+    </div>
+    <table border="1">
+        <thead></thead>
+        <tbody>
+
+            {% for dic in teacher_list.values %}
+                <tr>
+                    <td>{{ dic.nid }}</td>
+                    <td>{{ dic.name }}</td>
+                    <td>
+                        {% for c in dic.cls_list %}
+                            <span class="tag" nid="{{ c.id }}">{{ c.caption }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="/edit_teacher-{{ dic.nid }}.html">编辑</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#menu_teacher').addClass('active');
+        })
+    </script>
+{% endblock %}

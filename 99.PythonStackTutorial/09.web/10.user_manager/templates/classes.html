@@ -1,0 +1,178 @@
+{% extends "layout.html" %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>班级列表</h1>
+    <div>
+        <input id="id_add" type="button" value="添加" />
+        <a href="/add_classes.html">添加</a>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>标题</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cls_list %}
+                <tr>
+                    <td alex="id">{{ item.id }}</td>
+                    <td alex="caption">{{ item.caption }}</td>
+                    <td>
+                        <a class="td-edit">编辑</a>| <a target="_blank" href="/edit_classes.html?nid={{ item.id }}">跳转编辑</a> | <a class="td-delete">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <div class="pagination">
+        {{ str_pager|safe }}
+    </div>
+
+
+<div class="modal hide">
+    <form method="post" action="/classes.html" >
+        <input name="id" type="text" class="hide" />
+        <input name="caption" type="text" placeholder="标题" />
+
+
+        <input id="id_modal_cancel" type="button" value="取消"/>
+        <input type="submit" value="Submit确定"/>
+        <input type="button" id="modal_ajax_submit" value="Ajax确定"/>
+    </form>
+</div>
+<div class="shade hide"></div>
+<div class="remove hide">
+    <input id="id_remove_cancel" type="button" value="取消"/>
+    <input type="button" value="确定"/>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#menu_class').addClass('active');
+
+            bindAddEvent();
+            bindCancelEvent();
+            bindTdDeleteEvent();
+            bindSubmitModal();
+            bindTdEditEvent();
+        });
+
+        SUBMIT_URL = null;
+
+        function  bindAddEvent() {
+            $('#id_add').click(function () {
+                $('.modal,.shade').removeClass('hide');
+                SUBMIT_URL = "/classes.html";
+            });
+        }
+
+        function  bindTdEditEvent() {
+            /*
+            $('td .td-delete').click(function () {
+                $('.remove,.shade').removeClass('hide');
+            })
+            */
+            $('tbody').on('click', '.td-edit', function () {
+                $('.modal,.shade').removeClass('hide');
+                SUBMIT_URL = "/up_classes.html";
+                /*
+                var tds = $(this).parent().prevAll();
+                $('.modal input[name="caption"]').val(tds[0].innerText);
+                $('.modal input[name="id"]').val(tds[1].innerText);
+                */
+                $(this).parent().prevAll().each(function () {
+                    var text = $(this).text();
+                    var name = $(this).attr('alex');
+                    $('.modal input[name="' + name +'"]').val(text);
+                })
+
+            })
+        }
+        function  bindCancelEvent() {
+            $('#id_modal_cancel,#id_remove_cancel').click(function () {
+                $('.modal,.shade,.remove').addClass('hide');
+            });
+        }
+        
+        function  bindTdDeleteEvent() {
+            /*
+            $('td .td-delete').click(function () {
+                $('.remove,.shade').removeClass('hide');
+            })
+            */
+            $('tbody').on('click', '.td-delete', function () {
+                $('.remove,.shade').removeClass('hide');
+            })
+        }
+
+
+
+        function bindSubmitModal() {
+            $('#modal_ajax_submit').click(function () {
+                var nid = $('.modal input[name="id"]').val();
+                var value = $('.modal input[name="caption"]').val();
+                $.ajax({
+                    url: SUBMIT_URL,
+                    type: 'POST',
+                    data: {caption: value,id: nid},
+                    dataType: "JSON",
+                    success: function (rep) {
+                        //data = JSON.parse(data);
+                        if(!rep.status){
+                            alert(rep.error);
+                        }else{
+                            // location.reload();
+                            // 通过js在table表格最后追加一行数据，追加的数据就是当前增加的数据
+                            /*
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.caption }}</td>
+                                <td>
+                                    <a>编辑</a> | <a class="td-delete">删除</a>
+                                </td>
+                            </tr>
+                            */
+                            var tr = document.createElement('tr');
+                            var td1 = document.createElement('td');
+                            // td1ID
+                            td1.innerHTML = rep.data.id;
+                            var td2 = document.createElement('td');
+                            // td2标题
+                            td2.innerHTML = rep.data.caption;
+                            var td3 = document.createElement('td');
+                            td3.innerText = "|";
+                            var a1 = document.createElement('a');
+                            a1.innerHTML = "编辑";
+                            var a2 = document.createElement('a');
+                            a2.className = "td-delete";
+                            a2.innerHTML = "删除";
+                            $(td3).prepend(a1);
+                            $(td3).append(a2);
+                            $(tr).append(td1);
+                            $(tr).append(td2);
+                            $(tr).append(td3);
+                            $('table tbody').append(tr);
+
+                            $('.modal,.shade').addClass('hide');
+                        }
+                    }
+                })
+
+            })
+        }
+
+    </script>
+{% endblock %}

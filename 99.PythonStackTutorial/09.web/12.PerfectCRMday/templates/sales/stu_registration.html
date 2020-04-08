@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load crm_tags %}
+{% block body %}
+
+
+<div class="container col-lg-8 col-md-offset-2">
+
+    <div class="panel panel-success ">
+      <div class="panel-heading">
+        <h3 class="panel-title">老男孩教育|报名入学</h3>
+      </div>
+      <div class="panel-body">
+        {% if status != 1 %}
+          <span style="color: red;">{{ customer_form.errors }}</span>
+          <form class="form-horizontal" role="form"  method="post" onsubmit="return RegisterFormCheck()">{% csrf_token %}
+              {% for field in customer_form %}
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">{{ field.label }}</label>
+                <div class="col-sm-9">
+                  {{ field }}
+                </div>
+              </div>
+              {% endfor %}
+          <hr/>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">所报班级</label>
+                <div class="col-sm-9">
+                  {{ enroll_obj.enrolled_class }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">课程费用</label>
+                <div class="col-sm-9">
+                  {{ enroll_obj.enrolled_class.course.price }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">开课日期</label>
+                <div class="col-sm-9">
+                  {{ enroll_obj.enrolled_class.start_date }}
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <pre style="height: 450px;overflow: auto">{% render_enroll_contract enroll_obj %}</pre>
+                </div>
+              </div>
+               <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="checkbox" name="contract_agreed" > 我已认真阅读完协议并接受所有条款
+                </div>
+              </div>
+              <div class="text-center">
+                    <input type="submit" class="btn btn-info " value="提交">
+
+              </div>
+          </form>
+        {% else %}
+            <h2>感谢，报名表已提交，您的合同将很快被审核，即将开启激动的自我提升之旅！</h2>
+        {% endif %}
+      </div>
+
+
+    <hr>
+    {% if  status != 1 %}
+    <p>请上传身份照正反面照片</p>
+        <form id="filedropzone" method="post" action="{{ request.path }}" class="dropzone dz-clickable" >{% csrf_token %}
+            <div class="dz-default dz-message">
+                <div class="dz-icon icon-wrap icon-circle icon-wrap-md">
+                    <i class="fa fa-cloud-upload fa-3x"></i>
+                </div>
+                <div>
+                    <p class="dz-text">把证件信息拖放到这里</p>
+                    <p class="text-muted">最多可上传2张照片</p>
+                </div>
+            </div>
+
+        </form>
+    {% endif %}
+
+    </div>
+
+
+
+
+
+</div>
+
+
+{% endblock %}
+
+{% block bottom-js %}
+<script>
+    $(document).ready(function () {
+         Dropzone.options.filedropzone = {
+          url:"{{ request.path }}",
+          paramName: "file", // The name that will be used to transfer the file
+          maxFilesize: 5, // MB,
+          addRemoveLinks:true,
+          maxFiles:1,
+          uploadMultiple:true,
+          accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+              done("Naha, you don't.");
+            }
+            else { done(); }
+          }
+        };
+
+
+
+
+      myDropzone.on("success", function(file,response) {
+          /* Maybe display some more file information on your page */
+          console.log('filex upload done...', response);
+      } )
+
+    })
+    function RegisterFormCheck() {
+        if (myDropzone.files.length <2){
+            alert("必须至少上传2张图片!")
+            return false;
+        }
+
+        if ($("form :checkbox").prop('checked') ){
+            $("form").find("[disabled]").removeAttr("disabled");
+
+            return true;
+        }else {
+            alert("必须同意条款");
+            return false;
+        }
+
+    }
+
+
+
+
+      Dropzone.autoDiscover = false;
+      myDropzone = new Dropzone("#filedropzone");
+      myDropzone.on("addedfile", function(file) {
+        /* Maybe display some more file information on your page */
+        console.log("-------",file)
+      });
+    console.log(myDropzone.files)
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container col-lg-offset-4 ">
+      <form class="form-signin col-lg-3 pu " method="post"  role="form">{% csrf_token %}
+        <h3 class="form-signin-heading">Oldboy PerfectCRM</h3>
+        <input type="email"  name="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        {% if errors %}
+           <span style="color: red;">{{ errors.error }}</span>
+        {% endif %}
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </form>
+
+    </div> <!-- /container -->
+
+{% endblock %}
